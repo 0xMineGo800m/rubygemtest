@@ -27,6 +27,8 @@ helpers do
             @missing_header = check_if_contains(request_headers, array)
             if @missing_header
                   halt render_error(:header_required, nil, @missing_header)
+
+                  # Use this for debug - it will show all of the request headers:
                   # halt render_error(:header_required, request_headers, @missing_header)
             end
       end
@@ -36,13 +38,13 @@ end
 ################################
 
 class Jsonable
-   def to_json(options = {})
-         hash = {}
-         self.instance_variables.each do |var|
-            hash[var.to_s.sub(/^@/, '')] = self.instance_variable_get var
-         end
-         hash.to_json(options)
-    end
+      def to_json(options = {})
+            hash = {}
+            self.instance_variables.each { |var|
+                  hash[var.to_s.sub(/^@/, '')] = self.instance_variable_get var
+            }
+            hash.to_json(options)
+      end
 end
 
 ## Helpers
